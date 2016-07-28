@@ -1,0 +1,1 @@
+This project uses Neural Networks and Machine Learning techniques to analyze DICOM medical images, with an attempted functionality of a craniocaudal z-axis classifier. 
