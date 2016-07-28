@@ -73,11 +73,18 @@ class Network(object):
 
     def evaluate(self, test_data): #CURRENT ISSUE IS THAT THERE IS AN OVERFLOW WITH THE SIGMOID FUNCTION AND THUS THE EVALUATE METHOD WHICH CALLS ON THE FEEDFORWARD METHOD IS NOT RUNNING PROPERLY
        
+        numCorrect = 0
         test_results = [(np.argmax(self.feedforward(x)), y)
                         for (x, y) in test_data]
-        for x in test_results:
-            print "Hello the answer is: " + x
-        return sum(int(x == y) for (x, y) in test_results)
+        print test_results
+        #for x in test_results:
+            #print "Hello the answer is: " + x
+        for (x, y) in test_results:
+            if(x==y):
+                numCorrect = numCorrect + 1
+        return numCorrect
+
+        #return np.sum(int(x == y) for (x, y) in test_results)
 
     def cost_derivative(self, output_activations, y):
        
