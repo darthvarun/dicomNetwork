@@ -17,5 +17,5 @@ print "Training Data has been loaded!"
 testing_data = GenTrainingData.genTestingData()
 print "Testing Data has been loaded!"
 print training_data[0]
-net = network.Network([784, 30, 10])
+net = network.Network([784, 30, 317])
 net.SGD(training_data, 30, 5, 3.0, test_data = testing_data)
