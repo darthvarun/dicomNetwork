@@ -67,13 +67,16 @@ class Network(object):
             delta = np.dot(self.weights[-l+1].transpose(), delta) * sp
             nabla_b[-l] = delta
             nabla_w[-l] = np.dot(delta, activations[-l-1].transpose())
+        #print nabla_b
+        #print nabla_w
         return (nabla_b, nabla_w)
 
-    def evaluate(self, test_data):
+    def evaluate(self, test_data): #CURRENT ISSUE IS THAT THERE IS AN OVERFLOW WITH THE SIGMOID FUNCTION AND THUS THE EVALUATE METHOD WHICH CALLS ON THE FEEDFORWARD METHOD IS NOT RUNNING PROPERLY
        
         test_results = [(np.argmax(self.feedforward(x)), y)
                         for (x, y) in test_data]
-        print test_results
+        for x in test_results:
+            print "Hello the answer is: " + x
         return sum(int(x == y) for (x, y) in test_results)
 
     def cost_derivative(self, output_activations, y):
