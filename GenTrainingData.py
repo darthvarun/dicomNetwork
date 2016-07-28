@@ -20,7 +20,7 @@ testing_images = []
 def genTrainingData():
 	#print "genData has been invoked, bro" #debugging
 	for fileName in os.listdir("C:\DicomTraining"):
-		ds = dicom.read_file("C:\DicomTraining" + "\\" + fileName)
+		ds = dicom.read_file("C:\DicomTraining" + "\\" + fileName) #Using files from CT1 folder as Testing Data currently, change this and the above line to the location of the files on your desktop
 		dicomArray = ds.pixel_array
 		normalized = np.array(dicomArray)
 		normalized = np.reshape(normalized, [262144, 1])
@@ -34,7 +34,7 @@ def genTrainingData():
 def genTestingData():
 	#print "genData has been invoked, bro" #debugging
 	for fileName2 in os.listdir("C:\DicomTesting"):
-		ds2 = dicom.read_file("C:\DicomTesting" + "\\" + fileName2)
+		ds2 = dicom.read_file("C:\DicomTesting" + "\\" + fileName2) #Using files from CT2 folder as Testing Data currently, change this and the above line to the location of the files on your desktop
 		dicomArray2 = ds2.pixel_array
 		normalized2 = np.array(dicomArray2)
 		normalized2 = np.reshape(normalized2, [262144, 1])
@@ -50,7 +50,8 @@ def resizeImage(pixelArray, newWidth, newHeight):
 	print '*'
 	#img = Image.fromarray((scipy.misc.imresize(pixelArray, [newWidth, newHeight]), [newWidth*newHeight, 1]))
 	#img.show()
-	return np.reshape(scipy.misc.imresize(pixelArray, [newWidth, newHeight]), [newWidth*newHeight, 1])
+	#return np.array(np.power(np.reshape((scipy.misc.imresize(pixelArray, [newWidth, newHeight], interp = 'cubic')), [newWidth*newHeight, 1]), 1/3))
+	return np.array((np.reshape((scipy.misc.imresize(pixelArray, [newWidth, newHeight], interp = 'cubic')), [newWidth*newHeight, 1]))/155.0) 
 
 def vectorized_result(j):
     """Return a 10-dimensional unit vector with a 1.0 in the jth
