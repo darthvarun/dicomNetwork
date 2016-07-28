@@ -17,6 +17,11 @@ testing_images = []
 #np.reshape(dsoarr, [262144, 1])
 #print np.reshape(scipy.misc.imresize(dsoarr, [28, 28]), [784, 1])
 
+
+
+
+
+
 def genTrainingData():
 	#print "genData has been invoked, bro" #debugging
 	for fileName in os.listdir("C:\DicomTraining"):
@@ -26,8 +31,8 @@ def genTrainingData():
 		normalized = np.reshape(normalized, [262144, 1])
 		#normalized = normalized/1024.0
 		newNormalized = np.array(normalized/1024.0)
-		#training_images.append([newNormalized, int(fileName[0: int(len(fileName)-4)])])
-		training_images.append([resizeImage(newNormalized, 28, 28), int(fileName[0: int(len(fileName)-4)])])
+		#training_images.append([newNormalized, int(fileName[0: int(len(fileName)-4)])])		
+		training_images.append([resizeImage(newNormalized, 28, 28), vectorized_result(int(fileName[0: int(len(fileName)-4)]))])
 	#print "We will see this if genData succesfully loads the images, bro" #debugging 2.0
 	return training_images
 
@@ -41,7 +46,7 @@ def genTestingData():
 		#normalized = normalized/1024.0
 		newNormalized2 = np.array(normalized2/1024.0)
 		#training_images.append([newNormalized2, int(fileName2[0: int(len(fileName2)-4)])])
-		training_images.append([resizeImage(newNormalized2, 28, 28), int(fileName2[0: int(len(fileName2)-4)])])
+		testing_images.append([resizeImage(newNormalized2, 28, 28), vectorized_result(int(fileName2[0: int(len(fileName2)-4)]))])
 	#print "We will see this if genData succesfully loads the images, bro" #debugging 2.0
 	return testing_images
 
@@ -51,15 +56,15 @@ def resizeImage(pixelArray, newWidth, newHeight):
 	#img = Image.fromarray((scipy.misc.imresize(pixelArray, [newWidth, newHeight]), [newWidth*newHeight, 1]))
 	#img.show()
 	#return np.array(np.power(np.reshape((scipy.misc.imresize(pixelArray, [newWidth, newHeight], interp = 'cubic')), [newWidth*newHeight, 1]), 1/3))
-	return np.array((np.reshape((scipy.misc.imresize(pixelArray, [newWidth, newHeight], interp = 'cubic')), [newWidth*newHeight, 1]))/155.0) 
+	return np.float32((np.reshape((scipy.misc.imresize(pixelArray, [newWidth, newHeight], interp = 'cubic')), [newWidth*newHeight, 1]))/155.0) 
 
 def vectorized_result(j):
     """Return a 10-dimensional unit vector with a 1.0 in the jth
     position and zeroes elsewhere.  This is used to convert a digit
     (0...9) into a corresponding desired output from the neural
     network."""
-    e = np.zeros((10, 1))
-    e[j] = 1.0
+    e = np.zeros((317, 1))
+    e[j-1] = 1.0
     return e
 	
 """a = np.empty(784)
