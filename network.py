@@ -1,10 +1,4 @@
-
-
-#### Libraries
-# Standard library
 import random
-
-# Third-party libraries
 import numpy as np
 
 class Network(object):
@@ -79,7 +73,7 @@ class Network(object):
        
         test_results = [(np.argmax(self.feedforward(x)), y)
                         for (x, y) in test_data]
-        #print test_results
+        print test_results
         return sum(int(x == y) for (x, y) in test_results)
 
     def cost_derivative(self, output_activations, y):
